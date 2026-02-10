@@ -1,0 +1,7 @@
+[
+  {"name":"Super Mario","url":"https://example.com/mario","category":"Plataforma","img":"https://via.placeholder.com/220x150"},
+  {"name":"Pac-Man","url":"https://example.com/pacman","category":"Arcade","img":"https://via.placeholder.com/220x150"},
+  {"name":"Tetris","url":"https://example.com/tetris","category":"Puzzle","img":"https://via.placeholder.com/220x150"},
+  {"name":"Among Us","url":"https://example.com/amongus","category":"Multijugador","img":"https://via.placeholder.com/220x150"},
+  {"name":"Flappy Bird","url":"https://example.com/flappybird","category":"Arcade","img":"https://via.placeholder.com/220x150"}
+]
