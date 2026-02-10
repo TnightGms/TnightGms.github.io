@@ -1,127 +1,39 @@
-/* Reset básico */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
-}
-
-body {
-  color: #fff;
-  min-height: 100vh;
-  overflow-x: hidden;
-  background: #111;
-}
-
-/* Video de fondo */
-#bgVideo {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
-  opacity: 0.5;
-}
+/* Reset y body */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Roboto',sans-serif;}
+body { background:#111; color:#fff; min-height:100vh; }
 
 /* Navbar */
-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 30px;
-  background: rgba(0,0,0,0.7);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  backdrop-filter: blur(5px);
-}
+header { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; padding:15px 30px; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px);}
+header .logo { font-size:1.8rem; font-weight:bold; }
+header input { padding:8px 12px; border-radius:8px; border:none; width:250px; margin-right:10px;}
+header select, header button { padding:6px 10px; border-radius:6px; border:none; cursor:pointer;}
 
-header .logo {
-  display: flex;
-  align-items: center;
-  font-size: 1.8rem;
-  font-weight: bold;
-}
-
-header .logo img {
-  width: 50px;
-  margin-right: 10px;
-}
-
-header input {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: none;
-  width: 250px;
-  font-size: 1rem;
-}
-
-#categories {
-  display: flex;
-  gap: 10px;
-}
-
-/* Tarjetas de juegos */
-main {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
-  padding: 30px;
-}
-
-.gameCard {
-  background: rgba(255,255,255,0.05);
-  border-radius: 12px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
-  display: flex;
-  flex-direction: column;
-}
-
-.gameCard:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #00ffea;
-}
-
-.gameCard img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-}
-
-.gameCard h3 {
-  text-align: center;
-  padding: 10px;
-}
+/* Juegos */
+main { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:20px; padding:30px;}
+.gameCard { background: rgba(255,255,255,0.05); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; transition:0.3s; }
+.gameCard:hover { transform:scale(1.05); box-shadow:0 0 20px #00ffea; }
+.gameCard img { width:100%; height:150px; object-fit:cover; }
+.gameCard h3 { text-align:center; padding:10px; }
+.gameButtons { display:flex; justify-content:space-around; padding:10px; }
+.gameButtons button { padding:8px 12px; border-radius:6px; border:none; cursor:pointer; background:#00ffea; color:#000; font-weight:bold; transition:0.2s; }
+.gameButtons button:hover { transform:scale(1.1); background:#00d6c0; }
 
 /* Modal */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 2000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.95);
-  justify-content: center;
-  align-items: center;
-}
+.modal { display:none; position:fixed; z-index:2000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.95); justify-content:center; align-items:center; }
+.modal iframe { width:80%; height:80%; border-radius:10px; }
+.modal .close { position:absolute; top:20px; right:30px; font-size:2rem; cursor:pointer; }
 
-.modal iframe {
-  width: 80%;
-  height: 80%;
-  border-radius: 10px;
-}
+/* Contacto */
+#contactSection { padding:30px; background:rgba(0,0,0,0.6); margin:30px; border-radius:12px; }
+#contactSection h2 { text-align:center; margin-bottom:20px; }
+#contactSection form { display:flex; flex-direction:column; gap:10px; max-width:500px; margin:0 auto; }
+#contactSection input, #contactSection textarea { padding:10px; border-radius:8px; border:none; }
+#contactSection button { padding:10px; border:none; border-radius:8px; background:#00ffea; color:#000; font-weight:bold; cursor:pointer; transition:0.2s; }
+#contactSection button:hover { background:#00d6c0; }
 
-.modal .close {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  font-size: 2rem;
-  cursor: pointer;
-}
+/* Footer */
+footer { text-align:center; padding:15px; background:rgba(0,0,0,0.7); margin-top:20px; }
+
+/* Dark Mode */
+body.dark { background:#121212; color:#fff; }
+body.dark .gameCard { background: rgba(255,255,255,0.05); }
