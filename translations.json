@@ -1,0 +1,32 @@
+{
+  "es": {
+    "search": "Buscar juegos...",
+    "contact": "Contacto",
+    "send": "Enviar",
+    "name": "Nombre",
+    "email": "Email",
+    "message": "Mensaje",
+    "play": "Jugar",
+    "fullscreen": "Fullscreen",
+    "exitFullscreen": "Salir Fullscreen",
+    "categories": "Categorías",
+    "darkMode": "🌙",
+    "lightMode": "☀️",
+    "footer": "© 2026 Tnight Games V2 | Todos los derechos reservados"
+  },
+  "en": {
+    "search": "Search games...",
+    "contact": "Contact",
+    "send": "Send",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "play": "Play",
+    "fullscreen": "Fullscreen",
+    "exitFullscreen": "Exit Fullscreen",
+    "categories": "Categories",
+    "darkMode": "🌙",
+    "lightMode": "☀️",
+    "footer": "© 2026 Tnight Games V2 | All rights reserved"
+  }
+}
