@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tnight Games</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Fondo animado -->
+  <video autoplay muted loop id="bgVideo">
+    <source src="assets/bg.mp4" type="video/mp4">
+  </video>
+
+  <!-- Navbar -->
+  <header>
+    <div class="logo">
+      <img src="assets/logo.png" alt="Tnight Games">
+      Tnight Games
+    </div>
+    <input type="text" id="searchBar" placeholder="Buscar juegos...">
+    <div id="categories"></div>
+  </header>
+
+  <!-- Contenedor de juegos -->
+  <main id="gamesContainer">
+    <!-- Se llenará con JS -->
+  </main>
+
+  <!-- Modal de juego en pantalla completa -->
+  <div id="gameModal" class="modal">
+    <span class="close">&times;</span>
+    <iframe id="gameFrame" src="" frameborder="0" allowfullscreen></iframe>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
