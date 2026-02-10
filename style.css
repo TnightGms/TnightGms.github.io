@@ -1,6 +1,6 @@
 /* Reset y body */
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Roboto',sans-serif;}
-body { background:#111; color:#fff; min-height:100vh; }
+body { background:#111; color:#fff; min-height:100vh; transition:0.3s; }
 
 /* Navbar */
 header { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; padding:15px 30px; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px);}
