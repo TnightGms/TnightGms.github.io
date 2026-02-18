@@ -2,104 +2,209 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>TN GAMES BACKUP CENTRAL</title>
+<title>TN GAMES BACKUP</title>
 
 <style>
 body{
     margin:0;
     background:black;
     color:#00ff00;
-    font-family: "Courier New", monospace;
+    font-family:"Courier New", monospace;
     overflow:hidden;
+    cursor:none; /* Ocultamos cursor normal */
+}
+
+/* Canvas Matrix */
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:0;
+}
+
+/* Contenido */
+.container{
+    position:relative;
+    z-index:2;
     padding:20px;
 }
 
-/* UBGU arriba */
+/* UBGU */
 .ubgu{
     text-align:center;
-    margin-bottom:30px;
+    margin-bottom:20px;
 }
 
 /* Terminal */
 .terminal{
-    max-width:800px;
+    max-width:900px;
     margin:auto;
+    font-size:18px;
+    text-shadow:0 0 5px #00ff00;
 }
 
-/* Texto principal */
-.typing{
-    font-size:40px;
-    white-space:nowrap;
-    overflow:hidden;
-    border-right:3px solid #00ff00;
-    width:0;
-    text-shadow:0 0 5px #00ff00, 0 0 15px #00ff00;
-    animation: typing 3s steps(25,end) forwards,
-               blink 0.8s infinite;
+.line{
+    white-space:pre-wrap;
 }
 
-/* Links */
-.links{
-    margin-top:20px;
-    opacity:0;
-    animation: show 1s ease forwards;
-    animation-delay:3.2s;
+/* Cursor texto */
+.cursor-blink{
+    display:inline-block;
+    width:10px;
+    background:#00ff00;
+    animation:blink 1s infinite;
 }
 
-.links p{
-    margin:8px 0;
+@keyframes blink{
+    0%{opacity:1;}
+    50%{opacity:0;}
+    100%{opacity:1;}
 }
 
 a{
     color:#00ff00;
     text-decoration:none;
 }
-
 a:hover{
-    text-shadow:0 0 10px #00ff00;
+    text-shadow:0 0 15px #00ff00;
 }
 
-/* Animaciones */
-@keyframes typing{
-    from { width:0 }
-    to { width: 100% }
-}
-
-@keyframes blink{
-    0% { border-color:#00ff00 }
-    50% { border-color:transparent }
-    100% { border-color:#00ff00 }
-}
-
-@keyframes show{
-    from{opacity:0;}
-    to{opacity:1;}
+/* Cursor Hacker personalizado */
+.hacker-cursor{
+    position:fixed;
+    width:12px;
+    height:12px;
+    border:2px solid #00ff00;
+    box-shadow:0 0 10px #00ff00, 0 0 20px #00ff00;
+    pointer-events:none;
+    z-index:9999;
 }
 </style>
 </head>
-
 <body>
 
-<!-- UBGU SIEMPRE ARRIBA -->
-<div class="ubgu">
-    <a href="https://ubgameunion.neocities.org/" target="_blank">
-        <img src="https://ubgameunion.neocities.org/UBGU%20Member.svg" height="120">
-    </a>
-</div>
+<canvas id="matrix"></canvas>
 
-<div class="terminal">
-    <div class="typing">> TN GAMES BACKUP CENTRAL_</div>
+<div class="container">
 
-    <div class="links">
-        <p>> <a href="https://sites.google.com/view/tnightv2/home" target="_blank">Principal</a></p>
-        <p>> <a href="https://sites.google.com/view/tngames1/home" target="_blank">Backup One</a></p>
-        <p>> <a href="https://sites.google.com/view/tnight1/home" target="_blank">Backup Two</a></p>
-        <p>> <a href="https://sites.google.com/view/tnight2/home" target="_blank">Backup Three</a></p>
-        <p>> <a href="https://sites.google.com/view/tnight3/home" target="_blank">Backup Four</a></p>
-        <p>> <a href="https://sites.google.com/view/tnight4/home" target="_blank">Backup Five</a></p>
-        <p>> <a href="https://sites.google.com/view/tnight5/home" target="_blank">Backup Six</a></p>
+    <!-- UBGU SIEMPRE ARRIBA -->
+    <div class="ubgu">
+        <a href="https://ubgameunion.neocities.org/" target="_blank">
+            <img src="https://ubgameunion.neocities.org/UBGU%20Member.svg" height="110">
+        </a>
     </div>
+
+    <div class="terminal" id="terminal"></div>
 </div>
+
+<div class="hacker-cursor" id="cursor"></div>
+
+<script>
+/* MATRIX EFFECT */
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+const letters = "アァカサタナハマヤャラワン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const fontSize = 14;
+const columns = canvas.width / fontSize;
+const drops = [];
+
+for(let x=0; x<columns; x++)
+    drops[x]=1;
+
+function draw(){
+    ctx.fillStyle="rgba(0,0,0,0.05)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="#00ff00";
+    ctx.font=fontSize+"px monospace";
+    for(let i=0;i<drops.length;i++){
+        const text=letters[Math.floor(Math.random()*letters.length)];
+        ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+        if(drops[i]*fontSize>canvas.height && Math.random()>0.975)
+            drops[i]=0;
+        drops[i]++;
+    }
+}
+setInterval(draw,33);
+
+/* TERMINAL TYPING */
+const terminal = document.getElementById("terminal");
+
+const lines = [
+"> Booting TN GAMES system...",
+"> Initializing secure connection...",
+"> Access granted ✔",
+"",
+"> TN GAMES BACKUP",
+"",
+"> Open links:",
+"> Principal: https://sites.google.com/view/tnightv2/home",
+"> Backup One: https://sites.google.com/view/tngames1/home",
+"> Backup Two: https://sites.google.com/view/tnight1/home",
+"> Backup Three: https://sites.google.com/view/tnight2/home",
+"> Backup Four: https://sites.google.com/view/tnight3/home",
+"> Backup Five: https://sites.google.com/view/tnight4/home",
+"> Backup Six: https://sites.google.com/view/tnight5/home"
+];
+
+let lineIndex=0;
+let charIndex=0;
+
+function typeLine(){
+    if(lineIndex < lines.length){
+        if(charIndex < lines[lineIndex].length){
+            if(!terminal.lastChild){
+                const div=document.createElement("div");
+                div.classList.add("line");
+                terminal.appendChild(div);
+            }
+            terminal.lastChild.textContent += lines[lineIndex][charIndex];
+            charIndex++;
+            setTimeout(typeLine,30);
+        }else{
+            const div=document.createElement("div");
+            div.classList.add("line");
+            terminal.appendChild(div);
+            lineIndex++;
+            charIndex=0;
+            setTimeout(typeLine,300);
+        }
+    }else{
+        addLinks();
+    }
+}
+
+function addLinks(){
+    const linkData = [
+        ["Principal","https://sites.google.com/view/tnightv2/home"],
+        ["Backup One","https://sites.google.com/view/tngames1/home"],
+        ["Backup Two","https://sites.google.com/view/tnight1/home"],
+        ["Backup Three","https://sites.google.com/view/tnight2/home"],
+        ["Backup Four","https://sites.google.com/view/tnight3/home"],
+        ["Backup Five","https://sites.google.com/view/tnight4/home"],
+        ["Backup Six","https://sites.google.com/view/tnight5/home"]
+    ];
+
+    linkData.forEach(data=>{
+        const div=document.createElement("div");
+        div.classList.add("line");
+        div.innerHTML=`> <a href="${data[1]}" target="_blank">${data[0]}</a>`;
+        terminal.appendChild(div);
+    });
+}
+
+typeLine();
+
+/* HACKER CURSOR */
+const cursor = document.getElementById("cursor");
+document.addEventListener("mousemove", e=>{
+    cursor.style.top = e.clientY+"px";
+    cursor.style.left = e.clientX+"px";
+});
+</script>
 
 </body>
 </html>
