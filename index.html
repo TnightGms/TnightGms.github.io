@@ -1,11 +1,105 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=https://sites.google.com/view/tnightv2/">
-  <title>Redirecting...</title>
+<meta charset="UTF-8">
+<title>TN GAMES BACKUP CENTRAL</title>
+
+<style>
+body{
+    margin:0;
+    background:black;
+    color:#00ff00;
+    font-family: "Courier New", monospace;
+    overflow:hidden;
+    padding:20px;
+}
+
+/* UBGU arriba */
+.ubgu{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+/* Terminal */
+.terminal{
+    max-width:800px;
+    margin:auto;
+}
+
+/* Texto principal */
+.typing{
+    font-size:40px;
+    white-space:nowrap;
+    overflow:hidden;
+    border-right:3px solid #00ff00;
+    width:0;
+    text-shadow:0 0 5px #00ff00, 0 0 15px #00ff00;
+    animation: typing 3s steps(25,end) forwards,
+               blink 0.8s infinite;
+}
+
+/* Links */
+.links{
+    margin-top:20px;
+    opacity:0;
+    animation: show 1s ease forwards;
+    animation-delay:3.2s;
+}
+
+.links p{
+    margin:8px 0;
+}
+
+a{
+    color:#00ff00;
+    text-decoration:none;
+}
+
+a:hover{
+    text-shadow:0 0 10px #00ff00;
+}
+
+/* Animaciones */
+@keyframes typing{
+    from { width:0 }
+    to { width: 100% }
+}
+
+@keyframes blink{
+    0% { border-color:#00ff00 }
+    50% { border-color:transparent }
+    100% { border-color:#00ff00 }
+}
+
+@keyframes show{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+</style>
 </head>
+
 <body>
-  If you are not automatically redirected, click <a href="https://sites.google.com/view/tnight/">here</a>.
+
+<!-- UBGU SIEMPRE ARRIBA -->
+<div class="ubgu">
+    <a href="https://ubgameunion.neocities.org/" target="_blank">
+        <img src="https://ubgameunion.neocities.org/UBGU%20Member.svg" height="120">
+    </a>
+</div>
+
+<div class="terminal">
+    <div class="typing">> TN GAMES BACKUP CENTRAL_</div>
+
+    <div class="links">
+        <p>> <a href="https://sites.google.com/view/tnightv2/home" target="_blank">Principal</a></p>
+        <p>> <a href="https://sites.google.com/view/tngames1/home" target="_blank">Backup One</a></p>
+        <p>> <a href="https://sites.google.com/view/tnight1/home" target="_blank">Backup Two</a></p>
+        <p>> <a href="https://sites.google.com/view/tnight2/home" target="_blank">Backup Three</a></p>
+        <p>> <a href="https://sites.google.com/view/tnight3/home" target="_blank">Backup Four</a></p>
+        <p>> <a href="https://sites.google.com/view/tnight4/home" target="_blank">Backup Five</a></p>
+        <p>> <a href="https://sites.google.com/view/tnight5/home" target="_blank">Backup Six</a></p>
+    </div>
+</div>
+
 </body>
 </html>
