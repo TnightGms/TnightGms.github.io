@@ -11,18 +11,34 @@ body{
     color:#00ff00;
     font-family:"Courier New", monospace;
     overflow:hidden;
-    cursor:none; /* Ocultamos cursor normal */
+    cursor:crosshair;
 }
 
-/* Canvas Matrix */
+/* Scanlines */
+body::after{
+    content:"";
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:repeating-linear-gradient(
+        to bottom,
+        rgba(0,255,0,0.05) 0px,
+        rgba(0,255,0,0.05) 1px,
+        transparent 2px,
+        transparent 4px
+    );
+    pointer-events:none;
+    z-index:3;
+}
+
+/* Matrix */
 canvas{
     position:fixed;
-    top:0;
-    left:0;
+    top:0; left:0;
     z-index:0;
 }
 
-/* Contenido */
+/* Container */
 .container{
     position:relative;
     z-index:2;
@@ -35,49 +51,76 @@ canvas{
     margin-bottom:20px;
 }
 
-/* Terminal */
-.terminal{
-    max-width:900px;
-    margin:auto;
-    font-size:18px;
-    text-shadow:0 0 5px #00ff00;
+/* Glitch Title */
+.title{
+    font-size:42px;
+    text-align:center;
+    position:relative;
+    animation:glitch 1s infinite;
+    text-shadow:0 0 10px #00ff00;
 }
 
-.line{
-    white-space:pre-wrap;
+@keyframes glitch{
+    0%{text-shadow:2px 0 #00ff00;}
+    20%{text-shadow:-2px 0 #00ff00;}
+    40%{text-shadow:2px 2px #00ff00;}
+    60%{text-shadow:-2px -2px #00ff00;}
+    80%{text-shadow:2px -2px #00ff00;}
+    100%{text-shadow:-2px 2px #00ff00;}
 }
 
-/* Cursor texto */
-.cursor-blink{
-    display:inline-block;
-    width:10px;
-    background:#00ff00;
-    animation:blink 1s infinite;
+/* Buttons */
+.buttons{
+    text-align:center;
+    margin-top:40px;
 }
 
-@keyframes blink{
-    0%{opacity:1;}
-    50%{opacity:0;}
-    100%{opacity:1;}
-}
-
-a{
-    color:#00ff00;
-    text-decoration:none;
-}
-a:hover{
-    text-shadow:0 0 15px #00ff00;
-}
-
-/* Cursor Hacker personalizado */
-.hacker-cursor{
-    position:fixed;
-    width:12px;
-    height:12px;
+button{
+    background:black;
     border:2px solid #00ff00;
-    box-shadow:0 0 10px #00ff00, 0 0 20px #00ff00;
-    pointer-events:none;
-    z-index:9999;
+    color:#00ff00;
+    padding:10px 20px;
+    margin:10px;
+    font-family:inherit;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#00ff00;
+    color:black;
+    box-shadow:0 0 15px #00ff00;
+}
+
+/* Side Panel */
+.panel{
+    position:fixed;
+    right:20px;
+    top:100px;
+    border:1px solid #00ff00;
+    padding:15px;
+    width:200px;
+    font-size:14px;
+    box-shadow:0 0 15px #00ff00;
+}
+
+/* Energy Bar */
+.energy{
+    height:10px;
+    background:#003300;
+    margin-top:5px;
+}
+
+.energy-bar{
+    height:100%;
+    width:80%;
+    background:#00ff00;
+    animation:energy 2s infinite alternate;
+}
+
+@keyframes energy{
+    from{width:60%;}
+    to{width:95%;}
 }
 </style>
 </head>
@@ -87,123 +130,83 @@ a:hover{
 
 <div class="container">
 
-    <!-- UBGU SIEMPRE ARRIBA -->
-    <div class="ubgu">
-        <a href="https://ubgameunion.neocities.org/" target="_blank">
-            <img src="https://ubgameunion.neocities.org/UBGU%20Member.svg" height="110">
-        </a>
-    </div>
-
-    <div class="terminal" id="terminal"></div>
+<div class="ubgu">
+    <a href="https://ubgameunion.neocities.org/" target="_blank">
+        <img src="https://ubgameunion.neocities.org/UBGU%20Member.svg" height="100">
+    </a>
 </div>
 
-<div class="hacker-cursor" id="cursor"></div>
+<div class="title">> TN GAMES BACKUP_</div>
+
+<div class="buttons">
+    <button onclick="go(0)">Principal</button>
+    <button onclick="go(1)">Backup One</button>
+    <button onclick="go(2)">Backup Two</button>
+    <button onclick="go(3)">Backup Three</button>
+    <button onclick="go(4)">Backup Four</button>
+    <button onclick="go(5)">Backup Five</button>
+    <button onclick="go(6)">Backup Six</button>
+</div>
+
+<div class="panel">
+    <div>> SYSTEM STATUS</div>
+    <div>> CPU: 98%</div>
+    <div>> RAM: 76%</div>
+    <div>> SIGNAL: SECURE</div>
+    <div>> TIME: <span id="clock"></span></div>
+    <div>> ENERGY:</div>
+    <div class="energy"><div class="energy-bar"></div></div>
+</div>
+
+</div>
 
 <script>
-/* MATRIX EFFECT */
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
-
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
-
-const letters = "アァカサタナハマヤャラワン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const fontSize = 14;
-const columns = canvas.width / fontSize;
-const drops = [];
-
-for(let x=0; x<columns; x++)
-    drops[x]=1;
-
+/* Matrix */
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
+canvas.height=window.innerHeight;
+canvas.width=window.innerWidth;
+const letters="01";
+const fontSize=14;
+const columns=canvas.width/fontSize;
+const drops=[];
+for(let x=0;x<columns;x++) drops[x]=1;
 function draw(){
-    ctx.fillStyle="rgba(0,0,0,0.05)";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle="#00ff00";
-    ctx.font=fontSize+"px monospace";
-    for(let i=0;i<drops.length;i++){
-        const text=letters[Math.floor(Math.random()*letters.length)];
-        ctx.fillText(text,i*fontSize,drops[i]*fontSize);
-        if(drops[i]*fontSize>canvas.height && Math.random()>0.975)
-            drops[i]=0;
-        drops[i]++;
-    }
+ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="#00ff00";
+ctx.font=fontSize+"px monospace";
+for(let i=0;i<drops.length;i++){
+const text=letters[Math.floor(Math.random()*letters.length)];
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+if(drops[i]*fontSize>canvas.height&&Math.random()>0.975) drops[i]=0;
+drops[i]++;
+}
 }
 setInterval(draw,33);
 
-/* TERMINAL TYPING */
-const terminal = document.getElementById("terminal");
+/* Clock */
+function updateClock(){
+const now=new Date();
+document.getElementById("clock").textContent=
+now.toLocaleTimeString();
+}
+setInterval(updateClock,1000);
+updateClock();
 
-const lines = [
-"> Booting TN GAMES system...",
-"> Initializing secure connection...",
-"> Access granted ✔",
-"",
-"> TN GAMES BACKUP",
-"",
-"> Open links:",
-"> Principal: https://sites.google.com/view/tnightv2/home",
-"> Backup One: https://sites.google.com/view/tngames1/home",
-"> Backup Two: https://sites.google.com/view/tnight1/home",
-"> Backup Three: https://sites.google.com/view/tnight2/home",
-"> Backup Four: https://sites.google.com/view/tnight3/home",
-"> Backup Five: https://sites.google.com/view/tnight4/home",
-"> Backup Six: https://sites.google.com/view/tnight5/home"
+/* Links */
+const links=[
+"https://sites.google.com/view/tnightv2/home",
+"https://sites.google.com/view/tngames1/home",
+"https://sites.google.com/view/tnight1/home",
+"https://sites.google.com/view/tnight2/home",
+"https://sites.google.com/view/tnight3/home",
+"https://sites.google.com/view/tnight4/home",
+"https://sites.google.com/view/tnight5/home"
 ];
-
-let lineIndex=0;
-let charIndex=0;
-
-function typeLine(){
-    if(lineIndex < lines.length){
-        if(charIndex < lines[lineIndex].length){
-            if(!terminal.lastChild){
-                const div=document.createElement("div");
-                div.classList.add("line");
-                terminal.appendChild(div);
-            }
-            terminal.lastChild.textContent += lines[lineIndex][charIndex];
-            charIndex++;
-            setTimeout(typeLine,30);
-        }else{
-            const div=document.createElement("div");
-            div.classList.add("line");
-            terminal.appendChild(div);
-            lineIndex++;
-            charIndex=0;
-            setTimeout(typeLine,300);
-        }
-    }else{
-        addLinks();
-    }
+function go(i){
+window.open(links[i],"_blank");
 }
-
-function addLinks(){
-    const linkData = [
-        ["Principal","https://sites.google.com/view/tnightv2/home"],
-        ["Backup One","https://sites.google.com/view/tngames1/home"],
-        ["Backup Two","https://sites.google.com/view/tnight1/home"],
-        ["Backup Three","https://sites.google.com/view/tnight2/home"],
-        ["Backup Four","https://sites.google.com/view/tnight3/home"],
-        ["Backup Five","https://sites.google.com/view/tnight4/home"],
-        ["Backup Six","https://sites.google.com/view/tnight5/home"]
-    ];
-
-    linkData.forEach(data=>{
-        const div=document.createElement("div");
-        div.classList.add("line");
-        div.innerHTML=`> <a href="${data[1]}" target="_blank">${data[0]}</a>`;
-        terminal.appendChild(div);
-    });
-}
-
-typeLine();
-
-/* HACKER CURSOR */
-const cursor = document.getElementById("cursor");
-document.addEventListener("mousemove", e=>{
-    cursor.style.top = e.clientY+"px";
-    cursor.style.left = e.clientX+"px";
-});
 </script>
 
 </body>
