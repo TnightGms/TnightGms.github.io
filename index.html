@@ -38,35 +38,21 @@ canvas{
     z-index:0;
 }
 
-/* Container */
 .container{
     position:relative;
     z-index:2;
     padding:20px;
 }
 
-/* UBGU */
 .ubgu{
     text-align:center;
     margin-bottom:20px;
 }
 
-/* Glitch Title */
 .title{
     font-size:42px;
     text-align:center;
-    position:relative;
-    animation:glitch 1s infinite;
-    text-shadow:0 0 10px #00ff00;
-}
-
-@keyframes glitch{
-    0%{text-shadow:2px 0 #00ff00;}
-    20%{text-shadow:-2px 0 #00ff00;}
-    40%{text-shadow:2px 2px #00ff00;}
-    60%{text-shadow:-2px -2px #00ff00;}
-    80%{text-shadow:2px -2px #00ff00;}
-    100%{text-shadow:-2px 2px #00ff00;}
+    text-shadow:0 0 15px #00ff00;
 }
 
 /* Buttons */
@@ -75,12 +61,16 @@ canvas{
     margin-top:40px;
 }
 
+.btn-group{
+    margin:10px;
+}
+
 button{
     background:black;
     border:2px solid #00ff00;
     color:#00ff00;
-    padding:10px 20px;
-    margin:10px;
+    padding:8px 15px;
+    margin:3px;
     font-family:inherit;
     cursor:pointer;
     transition:0.3s;
@@ -92,7 +82,7 @@ button:hover{
     box-shadow:0 0 15px #00ff00;
 }
 
-/* Side Panel */
+/* Panel */
 .panel{
     position:fixed;
     right:20px;
@@ -104,23 +94,23 @@ button:hover{
     box-shadow:0 0 15px #00ff00;
 }
 
-/* Energy Bar */
-.energy{
-    height:10px;
-    background:#003300;
-    margin-top:5px;
+/* Access animation */
+.access{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:40px;
+    opacity:0;
+    text-shadow:0 0 20px #00ff00;
 }
-
-.energy-bar{
-    height:100%;
-    width:80%;
-    background:#00ff00;
-    animation:energy 2s infinite alternate;
+.show{
+    animation:flash 1s ease;
 }
-
-@keyframes energy{
-    from{width:60%;}
-    to{width:95%;}
+@keyframes flash{
+    0%{opacity:0;}
+    50%{opacity:1;}
+    100%{opacity:0;}
 }
 </style>
 </head>
@@ -139,26 +129,54 @@ button:hover{
 <div class="title">> TN GAMES BACKUP_</div>
 
 <div class="buttons">
-    <button onclick="go(0)">Principal</button>
-    <button onclick="go(1)">Backup One</button>
-    <button onclick="go(2)">Backup Two</button>
-    <button onclick="go(3)">Backup Three</button>
-    <button onclick="go(4)">Backup Four</button>
-    <button onclick="go(5)">Backup Five</button>
-    <button onclick="go(6)">Backup Six</button>
+
+<div class="btn-group">
+<button onclick="openNormal(0)">Principal</button>
+<button onclick="openBlank(0)">about:blank</button>
+</div>
+
+<div class="btn-group">
+<button onclick="openNormal(1)">Backup One</button>
+<button onclick="openBlank(1)">about:blank</button>
+</div>
+
+<div class="btn-group">
+<button onclick="openNormal(2)">Backup Two</button>
+<button onclick="openBlank(2)">about:blank</button>
+</div>
+
+<div class="btn-group">
+<button onclick="openNormal(3)">Backup Three</button>
+<button onclick="openBlank(3)">about:blank</button>
+</div>
+
+<div class="btn-group">
+<button onclick="openNormal(4)">Backup Four</button>
+<button onclick="openBlank(4)">about:blank</button>
+</div>
+
+<div class="btn-group">
+<button onclick="openNormal(5)">Backup Five</button>
+<button onclick="openBlank(5)">about:blank</button>
+</div>
+
+<div class="btn-group">
+<button onclick="openNormal(6)">Backup Six</button>
+<button onclick="openBlank(6)">about:blank</button>
+</div>
+
 </div>
 
 <div class="panel">
-    <div>> SYSTEM STATUS</div>
-    <div>> CPU: 98%</div>
-    <div>> RAM: 76%</div>
-    <div>> SIGNAL: SECURE</div>
-    <div>> TIME: <span id="clock"></span></div>
-    <div>> ENERGY:</div>
-    <div class="energy"><div class="energy-bar"></div></div>
+<div>> SYSTEM STATUS</div>
+<div>> CONNECTION: ENCRYPTED</div>
+<div>> FIREWALL: ACTIVE</div>
+<div>> TRACE: BLOCKED</div>
 </div>
 
 </div>
+
+<div class="access" id="access">ACCESS GRANTED</div>
 
 <script>
 /* Matrix */
@@ -185,15 +203,6 @@ drops[i]++;
 }
 setInterval(draw,33);
 
-/* Clock */
-function updateClock(){
-const now=new Date();
-document.getElementById("clock").textContent=
-now.toLocaleTimeString();
-}
-setInterval(updateClock,1000);
-updateClock();
-
 /* Links */
 const links=[
 "https://sites.google.com/view/tnightv2/home",
@@ -204,8 +213,22 @@ const links=[
 "https://sites.google.com/view/tnight4/home",
 "https://sites.google.com/view/tnight5/home"
 ];
-function go(i){
+
+function flash(){
+const a=document.getElementById("access");
+a.classList.add("show");
+setTimeout(()=>a.classList.remove("show"),1000);
+}
+
+function openNormal(i){
+flash();
 window.open(links[i],"_blank");
+}
+
+function openBlank(i){
+flash();
+let win=window.open("about:blank","_blank");
+win.document.write(`<iframe src="${links[i]}" style="width:100%;height:100%;border:none;"></iframe>`);
 }
 </script>
 
